@@ -9,6 +9,7 @@
 import Foundation
 
 struct MenuItem: Codable {
+    
     var id: Int
     var name: String
     var description: String
@@ -24,9 +25,10 @@ struct MenuItem: Codable {
         case category
         case imageURL = "image_url"
     }
-    
 }
 
 struct MenuItems: Codable {
     let items: [MenuItem]
 }
+
+

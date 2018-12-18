@@ -14,6 +14,7 @@ class MenuController {
     
     let baseURL = URL(string: "https://resto.mprog.nl/")!
     
+    /// fetches categories from server, returning in a completion handler
     func fetchCategories(completion: @escaping ([String]?) -> Void) {
         let categoryURL = baseURL.appendingPathComponent("categories")
         
@@ -25,16 +26,16 @@ class MenuController {
             } else {
                 completion(nil)
             }
-            
         }
         task.resume()
         
     }
     
+    /// fetches MenuItems from server, returning in a completion handler
     func fetchMenuItems(categoryName: String, completion: @escaping ([MenuItem]?) -> Void) {
-        let initialMemuUrl = baseURL.appendingPathComponent("menu")
+        let initialMenuUrl = baseURL.appendingPathComponent("menu")
         
-        var components = URLComponents(url: initialMemuUrl, resolvingAgainstBaseURL: true)!
+        var components = URLComponents(url: initialMenuUrl, resolvingAgainstBaseURL: true)!
         components.queryItems = [URLQueryItem(name: "category", value: categoryName)]
         
         let menuUrl = components.url!
@@ -52,6 +53,7 @@ class MenuController {
         task.resume()
     }
     
+    /// Submits order with POST, returning prep-time in a completion handler
     func submitOrder(menuIds: [Int], completion: @escaping (Int?) -> Void) {
         let orderURL = baseURL.appendingPathComponent("order")
         
@@ -76,6 +78,7 @@ class MenuController {
         task.resume()
     }
     
+    /// fetches images from server, returns in completion handler
     func fetchImage(url: URL, completion: @escaping (UIImage?) -> Void) {
         let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
             if let data = data,
